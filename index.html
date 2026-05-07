@@ -280,6 +280,55 @@ td{padding:11px 13px;vertical-align:top;line-height:1.45;}
 .ndi-body{font-size:12px;color:var(--muted);line-height:1.4;}
 .ndi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
 
+/* ═══ CALENDARIO ═══ */
+#section-CAL{padding:14px 24px 32px;}
+.cal-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:900px){.cal-container{grid-template-columns:1fr;}}
+.cal-card{background:white;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden;}
+.cal-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.cal-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.cal-nav{display:flex;gap:6px;align-items:center;}
+.cal-nav-btn{background:none;border:1.5px solid var(--border);border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--ink);}
+.cal-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.cal-month-label{font-size:13px;font-weight:600;color:var(--ink);min-width:130px;text-align:center;}
+.cal-grid{padding:12px;}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px;}
+.cal-dow-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);text-align:center;padding:4px 0;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-day{min-height:44px;border-radius:8px;padding:4px;display:flex;flex-direction:column;align-items:center;cursor:default;transition:background .15s;position:relative;}
+.cal-day.other-month .cal-day-num{opacity:.3;}
+.cal-day.today{background:var(--amber2);border:1.5px solid var(--amber);}
+.cal-day.has-aud{background:var(--blue2);border:1px solid #bfdbfe;cursor:pointer;}
+.cal-day.has-aud:hover{background:#dbeafe;}
+.cal-day.today.has-aud{background:linear-gradient(135deg,var(--amber2),var(--blue2));border:1.5px solid var(--amber);}
+.cal-day-num{font-size:12px;font-weight:600;color:var(--ink);line-height:1;}
+.cal-day.today .cal-day-num{color:var(--amber);font-weight:700;}
+.cal-day.has-aud .cal-day-num{color:var(--blue);font-weight:700;}
+.cal-day-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:2px;}
+.cal-day-count{font-size:9px;color:var(--blue);font-weight:700;margin-top:1px;}
+/* Lista audiencias */
+.aud-list-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.aud-list-body{max-height:500px;overflow-y:auto;}
+.aud-list-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px;}
+.aud-item{display:flex;gap:12px;padding:12px 18px;border-bottom:1px solid var(--cream2);align-items:flex-start;transition:background .15s;cursor:pointer;}
+.aud-item:hover{background:var(--cream);}
+.aud-item:last-child{border-bottom:none;}
+.aud-date-box{background:var(--ink);color:white;border-radius:10px;min-width:48px;padding:7px 8px;text-align:center;flex-shrink:0;}
+.aud-date-box.urgente{background:var(--red);}
+.aud-date-box.pronto{background:var(--amber);}
+.aud-date-box.hoy{background:var(--green);}
+.aud-date-day{font-size:20px;font-weight:700;font-family:'Playfair Display',serif;line-height:1;}
+.aud-date-mon{font-size:9px;text-transform:uppercase;letter-spacing:.8px;opacity:.8;margin-top:1px;}
+.aud-info{flex:1;}
+.aud-proceso{font-size:13px;font-weight:600;color:var(--ink);}
+.aud-parte{font-size:11.5px;color:var(--muted);margin-top:1px;}
+.aud-hora{font-size:11px;font-weight:600;color:var(--blue);background:var(--blue2);padding:2px 8px;border-radius:6px;display:inline-block;margin-top:4px;}
+.aud-dias-badge{font-size:11px;font-weight:600;margin-top:4px;display:inline-block;padding:2px 8px;border-radius:6px;}
+.aud-dias-badge.hoy{background:var(--green2);color:var(--green);}
+.aud-dias-badge.urgente{background:var(--red2);color:var(--red);}
+.aud-dias-badge.pronto{background:var(--amber2);color:var(--amber);}
+.aud-dias-badge.futuro{background:var(--blue2);color:var(--blue);}
+
 @media(max-width:700px){
   .dashboard,.toolbar,.tw{padding-left:14px;padding-right:14px;}
   .tw{margin:12px 14px 28px;}
@@ -287,6 +336,8 @@ td{padding:11px 13px;vertical-align:top;line-height:1.45;}
   .fgrid{grid-template-columns:1fr;}
   .notif-drawer{width:100%;}
   .topbar{padding:0 14px;}
+  #section-CAL{padding:12px 14px 28px;}
+  .cal-container{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -386,6 +437,7 @@ td{padding:11px 13px;vertical-align:top;line-height:1.45;}
   <div class="tabs">
     <div class="tab active" onclick="switchTab('J')" id="tab-J">⚖️ Procesos Judiciales <span class="tab-badge" id="tbj">0</span></div>
     <div class="tab" onclick="switchTab('N')" id="tab-N">📋 Trámites Notariales <span class="tab-badge" id="tbn">0</span></div>
+    <div class="tab" onclick="switchTab('CAL')" id="tab-CAL">📅 Calendario <span class="tab-badge" id="tbcal">0</span></div>
   </div>
 
   <!-- TOOLBAR J -->
@@ -427,6 +479,51 @@ td{padding:11px 13px;vertical-align:top;line-height:1.45;}
       <tbody id="tbodyN"><tr><td colspan="20"><div class="loading"><div class="spin"></div><br>Cargando trámites...</div></td></tr></tbody>
     </table></div>
     <div class="tf"><span id="footerN"></span><div class="pag" id="pagN"></div></div>
+  </div>
+
+  <!-- SECCIÓN CALENDARIO -->
+  <div id="section-CAL" style="display:none">
+    <div class="cal-container">
+      <!-- Cuadrícula mensual -->
+      <div class="cal-card">
+        <div class="cal-header">
+          <div class="cal-title">📅 Calendario de audiencias</div>
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calNavMes(-1)">‹</button>
+            <span class="cal-month-label" id="calMonthLabel">—</span>
+            <button class="cal-nav-btn" onclick="calNavMes(1)">›</button>
+          </div>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-dow">
+            <div class="cal-dow-label">Lun</div>
+            <div class="cal-dow-label">Mar</div>
+            <div class="cal-dow-label">Mié</div>
+            <div class="cal-dow-label">Jue</div>
+            <div class="cal-dow-label">Vie</div>
+            <div class="cal-dow-label">Sáb</div>
+            <div class="cal-dow-label">Dom</div>
+          </div>
+          <div class="cal-days" id="calDays"></div>
+        </div>
+      </div>
+
+      <!-- Lista próximas audiencias -->
+      <div class="cal-card">
+        <div class="aud-list-header">
+          <div class="cal-title">🗓 Próximas audiencias</div>
+          <select class="flt" id="calFiltro" onchange="renderCalendario()" style="font-size:12px;padding:6px 10px;">
+            <option value="all">Todas</option>
+            <option value="30">Próximos 30 días</option>
+            <option value="90">Próximos 3 meses</option>
+            <option value="past">Pasadas (últimos 30d)</option>
+          </select>
+        </div>
+        <div class="aud-list-body" id="audListBody">
+          <div class="aud-list-empty">Cargando audiencias...</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -495,7 +592,6 @@ td{padding:11px 13px;vertical-align:top;line-height:1.45;}
           </optgroup>
         </select>
       </div>
-      <!-- Alerta de término calculado -->
       <div id="termino_calculado" style="display:none;background:linear-gradient(135deg,#fff8e7,#fef3c7);border:1.5px solid var(--amber);border-radius:10px;padding:12px 14px;margin:8px 0;">
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--amber);margin-bottom:6px">⏱️ Término procesal calculado</div>
         <div id="termino_desc" style="font-size:13px;color:var(--ink);font-weight:600"></div>
@@ -577,6 +673,10 @@ let activeTab='J',sortKey='proceso',sortAsc=true,pageJ=1,pageN=1;
 let actKey=null,actType=null;
 const PER=10;
 
+// ── CALENDARIO STATE ──
+let calMes=new Date().getMonth();
+let calAnio=new Date().getFullYear();
+
 onAuthStateChanged(auth,user=>{
   hideSplash();
   if(user){
@@ -619,7 +719,6 @@ async function startListeners(){
       setSyncState('ok','✓ Sincronizado · '+procesos.length+' proceso(s) · '+new Date().toLocaleTimeString('es-CO'));
       buildNotifications();
       renderAll();
-      // Recargar cada 60 segundos para mantener datos frescos
       setTimeout(cargar,60000);
     }catch(e){setSyncState('error','Error: '+e.message);}
   }
@@ -639,7 +738,6 @@ function getSemaforoAuto(p){
   const fechaBot=p.fechaUltimaActuacionBot;
   const daysBot=fechaBot?Math.floor((Date.now()-new Date(fechaBot))/(864e5)):null;
   if(daysBot!==null&&daysBot<=3) return 'rojo';
-  // Verificar si hay términos procesales vencidos o por vencer
   const acts2=actuaciones[p._key]||[];
   const hoy2=new Date();hoy2.setHours(0,0,0,0);
   for(const a of acts2){
@@ -667,7 +765,6 @@ function semHtml(color,key,isManual){
   return '<span class="semaforo '+(m[color]||'sem-green')+'" style="cursor:pointer" onclick="openSemPicker(\''+key+'\',event)" title="Clic para cambiar">'+(icons[color]||'⚪')+' '+(labels[color]||color)+manualIcon+'</span>';
 }
 
-// ── SEMÁFORO PICKER ──
 window.openSemPicker=function(key,e){
   e.stopPropagation();
   document.querySelectorAll('.sem-picker').forEach(el=>el.remove());
@@ -705,7 +802,6 @@ window.setSemaforo=async function(key,color){
   }catch(e){alert('Error al guardar: '+e.message);}
 };
 
-
 function updateDashboard(){
   const total=procesos.length;
   let rojo=0,ambar=0,verde=0;
@@ -722,6 +818,9 @@ function updateDashboard(){
   document.getElementById('dVerde').textContent=verde;
   document.getElementById('dAudiencias').textContent=aud7;
   document.getElementById('dNotariales').textContent=notariales.length;
+  // Badge calendario
+  const totalAud=procesos.filter(p=>p.fechaProxAudiencia).length;
+  document.getElementById('tbcal').textContent=totalAud;
   buildAlertPanel(rojo,ambar,aud7);
 }
 
@@ -758,7 +857,6 @@ function buildNotifications(){
       return d<=2;
     });
     acts.forEach(a=>items.push({title:esc(p.proceso||'')+' — '+esc(p.demandante||''),sub:'Nueva actuación: '+esc(a.texto||'').slice(0,60)+'...',time:fmtDate(a.fecha||'')}));
-    // Notificar también publicaciones nuevas del día
     if(p.ultimaConsultaPublicaciones){
       const dPub=Math.floor((Date.now()-new Date(p.ultimaConsultaPublicaciones))/(864e5));
       if(dPub<=1&&p.ultimaPublicacionProcesal){
@@ -775,11 +873,188 @@ function buildNotifications(){
 window.toggleDrawer=function(){document.getElementById('notifDrawer').classList.toggle('open');};
 window.dismissAllAlerts=function(){document.getElementById('alertBody').innerHTML='<div class="ap-empty">✅ Todas leídas</div>';document.getElementById('alertCount').textContent='0';};
 
-window.switchTab=function(t){activeTab=t;['J','N'].forEach(x=>{document.getElementById('tab-'+x).classList.toggle('active',x===t);document.getElementById('toolbar-'+x).style.display=x===t?'flex':'none';document.getElementById('section-'+x).style.display=x===t?'block':'none';});};
+window.switchTab=function(t){
+  activeTab=t;
+  ['J','N','CAL'].forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('active',x===t);
+  });
+  document.getElementById('toolbar-J').style.display=t==='J'?'flex':'none';
+  document.getElementById('toolbar-N').style.display=t==='N'?'flex':'none';
+  document.getElementById('section-J').style.display=t==='J'?'block':'none';
+  document.getElementById('section-N').style.display=t==='N'?'block':'none';
+  document.getElementById('section-CAL').style.display=t==='CAL'?'block':'none';
+  if(t==='CAL') renderCalendario();
+};
 
-function renderAll(){updateDashboard();renderTable('J');renderTable('N');}
+function renderAll(){updateDashboard();renderTable('J');renderTable('N');if(activeTab==='CAL')renderCalendario();}
 
-// ── RENDER TABLE ──────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════
+// ── CALENDARIO ────────────────────────────────────
+// ══════════════════════════════════════════════════
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MESES_CORTOS=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+window.calNavMes=function(dir){
+  calMes+=dir;
+  if(calMes>11){calMes=0;calAnio++;}
+  if(calMes<0){calMes=11;calAnio--;}
+  renderCalendario();
+};
+
+window.renderCalendario=function(){
+  if(!procesos.length) return;
+  renderCalGrid();
+  renderAudList();
+};
+
+function renderCalGrid(){
+  document.getElementById('calMonthLabel').textContent=MESES[calMes]+' '+calAnio;
+
+  // Construir mapa de días con audiencias para este mes
+  const audMap={};
+  procesos.forEach(p=>{
+    if(!p.fechaProxAudiencia) return;
+    const fecha=new Date(p.fechaProxAudiencia);
+    if(fecha.getMonth()===calMes && fecha.getFullYear()===calAnio){
+      const d=fecha.getDate();
+      if(!audMap[d]) audMap[d]=[];
+      audMap[d].push(p);
+    }
+  });
+
+  const hoy=new Date();
+  const esHoyMes=hoy.getMonth()===calMes && hoy.getFullYear()===calAnio;
+
+  // Primer día del mes (ajustar: lunes=0)
+  const primerDia=new Date(calAnio,calMes,1);
+  let dow=primerDia.getDay(); // 0=dom
+  dow=dow===0?6:dow-1; // convertir a lunes=0
+
+  const diasEnMes=new Date(calAnio,calMes+1,0).getDate();
+  const diasAnteriores=new Date(calAnio,calMes,0).getDate();
+
+  let html='';
+  let celda=0;
+
+  // Días del mes anterior
+  for(let i=dow-1;i>=0;i--){
+    html+=`<div class="cal-day other-month"><span class="cal-day-num">${diasAnteriores-i}</span></div>`;
+    celda++;
+  }
+
+  // Días del mes actual
+  for(let d=1;d<=diasEnMes;d++){
+    const esHoy=esHoyMes&&d===hoy.getDate();
+    const tieneAud=!!audMap[d];
+    let cls='cal-day';
+    if(esHoy) cls+=' today';
+    if(tieneAud) cls+=' has-aud';
+    const onclick=tieneAud?`onclick="calVerDia(${d})"` :'';
+    html+=`<div class="${cls}" ${onclick}>
+      <span class="cal-day-num">${d}</span>
+      ${tieneAud?`<div class="cal-day-dot"></div><div class="cal-day-count">${audMap[d].length}</div>`:''}
+    </div>`;
+    celda++;
+  }
+
+  // Días del mes siguiente para completar la cuadrícula
+  const resto=celda%7===0?0:7-(celda%7);
+  for(let d=1;d<=resto;d++){
+    html+=`<div class="cal-day other-month"><span class="cal-day-num">${d}</span></div>`;
+  }
+
+  document.getElementById('calDays').innerHTML=html;
+}
+
+window.calVerDia=function(dia){
+  // Filtrar y mostrar solo audiencias de ese día en la lista
+  const fecha=`${calAnio}-${String(calMes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+  renderAudListFiltrado(fecha);
+};
+
+function renderAudList(){
+  const filtro=document.getElementById('calFiltro').value;
+  const ahora=new Date();
+  ahora.setHours(0,0,0,0);
+
+  let lista=procesos
+    .filter(p=>p.fechaProxAudiencia)
+    .map(p=>({...p,_fecha:new Date(p.fechaProxAudiencia)}))
+    .filter(p=>{
+      const d=Math.floor((p._fecha-ahora)/(864e5));
+      if(filtro==='30') return d>=0&&d<=30;
+      if(filtro==='90') return d>=0&&d<=90;
+      if(filtro==='past') return d>=-30&&d<0;
+      return true; // all
+    })
+    .sort((a,b)=>a._fecha-b._fecha);
+
+  renderAudItems(lista,false);
+}
+
+function renderAudListFiltrado(fechaStr){
+  const lista=procesos
+    .filter(p=>p.fechaProxAudiencia&&p.fechaProxAudiencia.slice(0,10)===fechaStr)
+    .map(p=>({...p,_fecha:new Date(p.fechaProxAudiencia)}))
+    .sort((a,b)=>a._fecha-b._fecha);
+  renderAudItems(lista,true);
+}
+
+function renderAudItems(lista,esFiltroDia){
+  const body=document.getElementById('audListBody');
+  const ahora=new Date();ahora.setHours(0,0,0,0);
+
+  if(!lista.length){
+    body.innerHTML=`<div class="aud-list-empty">${esFiltroDia?'Sin audiencias ese día':'Sin audiencias en este período'}</div>`;
+    return;
+  }
+
+  body.innerHTML=lista.map(p=>{
+    const fecha=p._fecha;
+    const dia=fecha.getDate();
+    const mes=MESES_CORTOS[fecha.getMonth()];
+    const diasD=Math.floor((fecha-ahora)/(864e5));
+
+    // Hora
+    let hora='';
+    const fa=p.fechaProxAudiencia;
+    if(fa&&fa.includes('T')){
+      const hh=String(fecha.getHours()).padStart(2,'0');
+      const mm2=String(fecha.getMinutes()).padStart(2,'0');
+      hora=`${hh}:${mm2}`;
+    }
+
+    // Badge días
+    let badgeCls='futuro',badgeTxt='';
+    if(diasD<0){badgeCls='urgente';badgeTxt='Hace '+Math.abs(diasD)+' día(s)';}
+    else if(diasD===0){badgeCls='hoy';badgeTxt='¡Hoy!';}
+    else if(diasD<=2){badgeCls='urgente';badgeTxt='En '+diasD+' día(s)';}
+    else if(diasD<=7){badgeCls='pronto';badgeTxt='En '+diasD+' días';}
+    else{badgeTxt='En '+diasD+' días';}
+
+    // Color caja fecha
+    let boxCls='aud-date-box';
+    if(diasD<0) boxCls+=' urgente';
+    else if(diasD===0) boxCls+=' hoy';
+    else if(diasD<=2) boxCls+=' urgente';
+    else if(diasD<=7) boxCls+=' pronto';
+
+    return `<div class="aud-item" onclick="viewRecord('J','${p._key}')">
+      <div class="${boxCls}">
+        <div class="aud-date-day">${dia}</div>
+        <div class="aud-date-mon">${mes}</div>
+      </div>
+      <div class="aud-info">
+        <div class="aud-proceso">${esc(p.proceso||'Proceso')}</div>
+        <div class="aud-parte">${esc(p.demandante||'')}${p.demandado?' vs '+esc(p.demandado):''}</div>
+        ${hora?`<span class="aud-hora">🕐 ${hora}</span>`:''}
+        <span class="aud-dias-badge ${badgeCls}">${badgeTxt}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+// ══════════════════════════════════════════════════
+
 function renderTable(type){
   const isJ=type==='J',campos=isJ?camposJ:camposN,data=isJ?procesos:notariales;
   const visibles=campos.filter(c=>c.visible);
@@ -834,14 +1109,12 @@ function renderTable(type){
       return '<td class="td-muted">'+esc(val||'—')+'</td>';
     }).join('');
 
-    // ── COLUMNA PUBLICACIÓN PROCESAL (NUEVA) ──
     let pubCell='<td></td>';
     if(isJ){
       const pubTexto=row.ultimaPublicacionProcesal||'';
       const pubUrl=row.urlUltimaPublicacion||'';
       const pubFecha=row.ultimaConsultaPublicaciones||'';
       if(pubTexto){
-        // Extraer solo el nombre del auto (antes del primer "|")
         const nombreAuto=pubTexto.split('|')[0].trim().slice(0,60);
         pubCell=`<td>
           ${pubUrl
@@ -898,7 +1171,6 @@ window.marcarRevisado=async function(key){
       registradoPor:auth.currentUser?.email||'',
       createdAt:new Date().toISOString()
     });
-    // Actualizar en memoria
     if(!actuaciones[key]) actuaciones[key]=[];
     actuaciones[key].push({fecha:hoy,tipo:'revision',texto:'Revisión de expediente',origen:'manual'});
     const idx=procesos.findIndex(p=>p._key===key);
@@ -917,7 +1189,6 @@ window.openEdit=function(type,key){const campos=type==='J'?camposJ:camposN,data=
 function buildFormHTML(campos,data,showBot){const v=campos.filter(c=>c.visible);let h='<div class="fgrid">';v.forEach(c=>{const val=data[c.key]!==undefined?data[c.key]:'';const full=c.tipo==='textarea'?' full':'';if(c.key==='tipoMedidaCautelar'){const mc=data['medidasCautelares']||'NO';if(mc!=='SI'){h+='<div class="fg" id="wrap_tipoMedidaCautelar" style="display:none"><label>'+esc(c.label)+'</label><input type="text" id="f_tipoMedidaCautelar" value="'+esc(String(val))+'"></div>';return;}}if(c.key==='estadoMedidaCautelar'){const mc=data['medidasCautelares']||'NO';const valE=data[c.key]||'Solicitada';if(mc!=='SI'){h+='<div class="fg" id="wrap_estadoMedidaCautelar" style="display:none"><label>'+esc(c.label)+'</label><select id="f_estadoMedidaCautelar"><option>Solicitada</option><option>En trámite</option><option>Registrada</option><option>Levantada</option></select></div>';return;}}h+='<div class="fg'+full+'"><label>'+esc(c.label)+(c.requerido?' *':'')+'</label>';if(c.tipo==='textarea')h+='<textarea id="f_'+c.key+'" rows="3">'+esc(String(val))+'</textarea>';else if(c.tipo==='select'&&c.opciones){
       h+='<select id="f_'+c.key+'" '+(c.key==='medidasCautelares'?'onchange="toggleTipoMedida(this.value)"':'')+'>'+c.opciones.map(o=>'<option'+(o===val?' selected':'')+'>'+o+'</option>').join('')+'</select>';
     }else if(c.tipo==='date')h+='<input type="date" id="f_'+c.key+'" value="'+esc(String(val))+'">';else if(c.tipo==='datetime')h+='<input type="datetime-local" id="f_'+c.key+'" value="'+esc(String(val).slice(0,16))+'">';else if(c.tipo==='number')h+='<input type="number" id="f_'+c.key+'" value="'+esc(String(val))+'">';else h+='<input type="text" id="f_'+c.key+'" value="'+esc(String(val))+'">';h+='</div>';});h+='</div>';
-  // Sección bot siempre visible en edición
   if(showBot){
     const cod=data['codigoDespacho']||'';
     const nom=data['nombreDespacho']||'';
@@ -951,7 +1222,6 @@ window.toggleTipoMedida=function(val){
 window.saveRecord=async function(type,key){
   const isJ=type==='J',campos=(isJ?camposJ:camposN).filter(c=>c.visible),data={};
   for(const c of campos){const el=document.getElementById('f_'+c.key);if(!el)continue;if(c.requerido&&!el.value.trim()){alert('El campo "'+c.label+'" es obligatorio.');return;}data[c.key]=c.tipo==='number'?(parseFloat(el.value)||0):el.value.trim();}
-  // Guardar campos bot si existen
   const fCod=document.getElementById('f_codigoDespacho');
   const fNom=document.getElementById('f_nombreDespacho');
   if(fCod) data['codigoDespacho']=fCod.value.trim().replace(/\s+/g,'');
@@ -965,7 +1235,6 @@ window.saveRecord=async function(type,key){
 
 window.delRecord=async function(type,key){if(!confirm('¿Eliminar este registro?'))return;await remove(ref(db,(type==='J'?'procesos':'notariales')+'/'+key));};
 
-// ── VIEW RECORD ───────────────────────────────────────────────────────────────
 window.viewRecord=function(type,key){
   const isJ=type==='J',data=(isJ?procesos:notariales).find(x=>x._key===key);if(!data)return;
   const campos=isJ?camposJ:camposN;
@@ -978,14 +1247,12 @@ window.viewRecord=function(type,key){
   let h='';
   if(isJ)h+=`<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">${semHtml(data.semaforoManual||sem,key,!!data.semaforoManual)}<span style="font-size:12px;color:var(--muted)">${data.semaforoManual?'Color manual (clic para cambiar)':'Estado según última revisión'}</span></div>`;
 
-  // ── SECCIÓN PUBLICACIÓN PROCESAL (NUEVA) ──
   if(isJ){
     const pubTexto=data.ultimaPublicacionProcesal||'';
     const pubUrl=data.urlUltimaPublicacion||'';
     const pubFecha=data.ultimaConsultaPublicaciones||'';
     h+=`<div class="fsec">📢 Última publicación procesal (bot automático)</div>`;
     if(pubTexto){
-      // Separar nombre del auto y fecha si vienen juntos con "|"
       const partes=pubTexto.split('|');
       const nombreAuto=partes[0].trim();
       const fechaPub=partes[1]?partes[1].trim():'';
@@ -1044,20 +1311,17 @@ window.viewRecord=function(type,key){
   document.getElementById('mDetail').classList.add('show');
 };
 
-// ── FESTIVOS COLOMBIA (fijos + algunos móviles aproximados) ──────────────────
 window.FESTIVOS_CO = [
-  // Fijos
   '01-01','05-01','20-07','07-08','08-12','25-12',
-  // Semana Santa aproximada (variables, usar como referencia)
 ];
 
 window.esFestivoCO = function(fecha) {
-  const d = fecha.toISOString().slice(5,10); // MM-DD
+  const d = fecha.toISOString().slice(5,10);
   return window.FESTIVOS_CO.includes(d);
 }
 
 window.esHabil = function(fecha) {
-  const dow = fecha.getDay(); // 0=dom, 6=sab
+  const dow = fecha.getDay();
   return dow !== 0 && dow !== 6 && !window.esFestivoCO(fecha);
 }
 
@@ -1069,7 +1333,7 @@ window.esVacanciaJudicial = function(fecha) {
 
 window.sumarDiasHabiles = function(fechaInicio, dias, excluirVacancia) {
   let fecha = new Date(fechaInicio);
-  fecha.setDate(fecha.getDate() + 1); // empieza al día siguiente
+  fecha.setDate(fecha.getDate() + 1);
   let contados = 0;
   while (contados < dias) {
     if (window.esHabil(fecha) && !(excluirVacancia && window.esVacanciaJudicial(fecha))) {
@@ -1077,12 +1341,10 @@ window.sumarDiasHabiles = function(fechaInicio, dias, excluirVacancia) {
     }
     if (contados < dias) fecha.setDate(fecha.getDate() + 1);
   }
-  // Si cae en inhábil, mover al siguiente hábil
   while (!window.esHabil(fecha)) fecha.setDate(fecha.getDate() + 1);
   return fecha;
 }
 
-// Definición de términos por tipo de actuación
 window.TERMINOS = {
   'admision_demanda':           {dias:5,  label:'Subsanar demanda',           habil:true,  vacancia:true},
   'subsanacion_demanda':        {dias:5,  label:'Vencimiento subsanación',     habil:true,  vacancia:true},
@@ -1103,7 +1365,6 @@ window.TERMINOS = {
 
 window.onTipoProcesalChange = function() {
   calcularTermino();
-  // Autocompletar descripción
   const tipo = document.getElementById('actTipoProcesal').value;
   const labels = {
     'admision_demanda': 'Auto admisorio de demanda',
@@ -1130,25 +1391,18 @@ window.calcularTermino = function() {
   const tipo = document.getElementById('actTipoProcesal').value;
   const fecha = document.getElementById('actFecha').value;
   const box = document.getElementById('termino_calculado');
-
   if (!tipo || !fecha || !window.TERMINOS[tipo]) { box.style.display='none'; return; }
-
   const t = window.TERMINOS[tipo];
   const fechaBase = new Date(fecha + 'T12:00:00');
   const fechaVence = sumarDiasHabiles(fechaBase, t.dias, t.vacancia);
-
   const hoy = new Date(); hoy.setHours(0,0,0,0);
   const diasRestantes = Math.floor((fechaVence - hoy) / 864e5);
-
-  // Formatear fecha vencimiento
   const dd = String(fechaVence.getDate()).padStart(2,'0');
   const mm = String(fechaVence.getMonth()+1).padStart(2,'0');
   const yy = fechaVence.getFullYear();
   const fechaStr = dd+'/'+mm+'/'+yy;
-
   document.getElementById('termino_desc').textContent = t.label + ' — ' + t.dias + ' días hábiles';
   document.getElementById('termino_fecha').textContent = '📅 Vence el: ' + fechaStr;
-
   const alerta = document.getElementById('termino_alerta');
   if (diasRestantes < 0) {
     alerta.textContent = '🔴 TÉRMINO VENCIDO hace ' + Math.abs(diasRestantes) + ' día(s)';
@@ -1163,10 +1417,7 @@ window.calcularTermino = function() {
     alerta.textContent = '🟢 ' + diasRestantes + ' día(s) restantes';
     alerta.style.color = 'var(--green)';
   }
-
   box.style.display = 'block';
-
-  // Autocompletar próxima fecha
   const proxFecha = document.getElementById('actProxFecha');
   if (!proxFecha.value) {
     proxFecha.value = fechaVence.toISOString().slice(0,10);
@@ -1174,16 +1425,13 @@ window.calcularTermino = function() {
 };
 
 window.abrirTyba=function(radicado){
-  // Copiar radicado al portapapeles
   navigator.clipboard.writeText(radicado).then(()=>{
-    // Mostrar aviso flotante
     const aviso=document.createElement('div');
     aviso.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 20px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px;';
     aviso.innerHTML='⚖️ <strong>Radicado copiado</strong> — pégalo en "Código Proceso" con Ctrl+V';
     document.body.appendChild(aviso);
     setTimeout(()=>aviso.remove(),4000);
   }).catch(()=>{});
-  // Abrir Tyba
   window.open('https://procesojudicial.ramajudicial.gov.co/Justicia21/Administracion/Ciudadanos/frmConsulta.aspx?opcion=consulta','_blank');
 };
 window.openActuacion=function(key,proceso,demandante){
@@ -1234,7 +1482,6 @@ window.saveConfig=async function(){try{await set(ref(db,'config/camposJudiciales
 
 function stateHtml(e){const m={Activo:'b-activo',Terminado:'b-terminado',Suspendido:'b-suspendido','Paz y Salvo':'b-paz'};return '<span class="badge '+(m[e]||'b-activo')+'">'+e+'</span>';}
 function fmtDate(d){if(!d||d==='—')return'—';try{
-  // Si tiene hora (formato datetime-local: 2026-04-09T10:00)
   if(d.includes('T')||d.includes(' ')){
     const dt=new Date(d.includes('T')?d:d.replace(' ','T'));
     const dd=String(dt.getDate()).padStart(2,'0');
@@ -1244,7 +1491,6 @@ function fmtDate(d){if(!d||d==='—')return'—';try{
     const min=String(dt.getMinutes()).padStart(2,'0');
     return dd+'/'+mm+'/'+yy+' '+hh+':'+min;
   }
-  // Solo fecha
   const dt=new Date(d+'T12:00:00');
   const dd=String(dt.getDate()).padStart(2,'0');
   const mm=String(dt.getMonth()+1).padStart(2,'0');
@@ -1259,6 +1505,7 @@ document.getElementById('fSemJ').addEventListener('change',()=>{pageJ=1;renderTa
 document.getElementById('sN').addEventListener('input',()=>{pageN=1;renderTable('N');});
 document.getElementById('tbj').textContent='0';
 document.getElementById('tbn').textContent='0';
+document.getElementById('tbcal').textContent='0';
 </script>
 </body>
 </html>
