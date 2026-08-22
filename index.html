@@ -1063,7 +1063,7 @@ function renderTable(type){
   const sem=isJ?(document.getElementById('fSemJ').value||''):'';
   let filtered=data.filter(r=>{
     const mQ=!q||[...visibles.map(c=>r[c.key]||'')].join(' ').toLowerCase().includes(q);
-    const mE=!est||r.estado===est;
+    const mE=!est?!['Terminado','Paz y Salvo'].includes(r.estado):r.estado===est;
     const mS=!sem||(isJ&&getSemaforo(r)===sem);
     return mQ&&mE&&mS;
   });
